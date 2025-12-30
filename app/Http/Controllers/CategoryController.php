@@ -14,7 +14,6 @@ class CategoryController extends Controller
         $user = $request->user();
         $companyId = $user->company_id;
 
-        $perPage = min($request->get('per_page', 50), 100);
         $search = $request->get('search');
         $status = $request->get('status');
 
@@ -30,10 +29,10 @@ class CategoryController extends Controller
         }
 
         $categories = $query->orderBy('name')
-            ->paginate($perPage);
+            ->get();
 
         return response()->json([
-            $categories
+            'data' => $categories
         ]);
     }
 
